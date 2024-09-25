@@ -1,6 +1,13 @@
 from django.db import models
 
 # Create your models here.
+class Post(models.Model):
+    title = models.CharField(max_length=30)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
 class Buyer(models.Model):
     name = models.CharField(max_length=30)
     balance = models.DecimalField(decimal_places=2, max_digits=6)
@@ -24,21 +31,19 @@ class Game(models.Model):
 QUERYSET
 
 python manage.py shell
->>> from task1.models import Buyer
->>> Buyer.objects.create(name='Garry', balance=111.11, age=12)
->>> Buyer.objects.create(name='Alex', balance=5690.1, age=19)
->>> Buyer.objects.create(name='Tonny', balance=3010.9, age=33)
+>>> from task1.models import Post
+>>> Post.objects.create(title='title1', description='desc1')
+>>> Post.objects.create(title='title2', description='desc2')
+>>> Post.objects.create(title='title2', description='desc2')
 
->>> from task1.models import Game
->>> Game.objects.create(title='GTA5', cost=3000, size=112, description='rob and kill', age_limited=True)
->>> Game.objects.create(title='PayDay2', cost=1500, size=44, description='rob and rob', age_limited=True)
->>> Game.objects.create(title='Kindergarten', cost=100, size=19, description='peace bro', age_limited=False)
+>>> post = Post.objects.get(id=1)
+>>> post.title = 'New title'
+>>> post.save
+>>> post.save()
 
->>> garry = Buyer.objects.get(id=1)
->>> alex = Buyer.objects.get(id=2) 
->>> tonny = Buyer.objects.get(id=3) 
+>>> Post.objects.all()
+>>> post = Post.objects.get(id=3)
+>>> post.delete()
 
->>> Game.objects.get(id=1).buyer.set((alex, tonny))               
->>> Game.objects.get(id=2).buyer.set((alex, tonny))               
->>> Game.objects.get(id=3).buyer.set((alex, garry))
+>>> Post.objects.filter(title='title2')  
 '''
