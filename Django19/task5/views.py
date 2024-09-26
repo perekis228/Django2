@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
-from .models import Comix
+from .models import Comix, Test
 from .forms import Pages
 
 # Create your views here.
@@ -16,3 +16,6 @@ def main(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'main.html', {'page_obj': page_obj})
+
+def test(request):
+    return render(request, 'menu.html')
