@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+</head>
+<body style="background-color: #ffae61">
+    <form method="post">
+        {% csrf_token %}
+        <label for="pages">Кол-во страниц:</label>
+        <input type="text" id="pages" name="pages" maxlength="30" required>
+        <button type="submit">Выбрать</button>
+    </form>
+
+    {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation">
+        <ul class="paginator">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{page_obj.previous_page_number}}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif%}
+
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">{{i}}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{i}}">{{i}}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{page_obj.next_page_number}}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+        </nav>
+    {% endif %}
+
+<div class="row">
+    {% for comix in page_obj %}
+        <div class="col-md-4" style="border:3px #00B344  solid; border-radius:5px;
+                                    width:175px; text-align:center; display: inline-block;
+                                    background-color: #5b061f">
+            <h2>{{comix.title}}</h2>
+            <p>{{comix.description}}</p>
+            <p>{{comix.year}}</p>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>
